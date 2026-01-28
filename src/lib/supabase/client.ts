@@ -3,8 +3,13 @@ import type { Database } from '@/types/database'
 
 // NEXT_PUBLIC_* 환경 변수는 빌드 타임에 번들에 포함됨
 // 따라서 환경 변수 변경 후 반드시 재배포 필요!
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsYWNlaG9sZGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDk3MjcyMDAsImV4cCI6MTk2NTMwMzIwMH0.fakekeyforbuild'
+
+// ⚠️ TEMPORARY: 환경 변수가 작동하지 않는 경우 하드코딩 (테스트용)
+const FALLBACK_URL = 'https://zsyaclpdkxkcgymejedg.supabase.co'
+const FALLBACK_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzeWFjbHBka3hrY2d5bWVqZWRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk0MDI2MTgsImV4cCI6MjA4NDk3ODYxOH0.EFi8NtEAJgGnVLPsUyy7b1NFcW83fWW8FK1G8TGpNag'
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || FALLBACK_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || FALLBACK_KEY
 
 // 클라이언트에서만 디버깅 로그 출력
 if (typeof window !== 'undefined') {
