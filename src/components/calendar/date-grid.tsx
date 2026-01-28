@@ -14,6 +14,7 @@ import {
 } from '@/lib/calendar/date-utils'
 import { supabase } from '@/lib/supabase/client'
 import { format } from 'date-fns'
+import { useUserStore } from '@/lib/stores/user-store'
 
 interface DateGridProps {
   currentMonth: Date
@@ -36,6 +37,8 @@ export function DateGrid({ currentMonth, roomCode, roomId }: DateGridProps) {
   const weeks = groupDatesByWeek(dates)
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
   const [dateSelections, setDateSelections] = useState<DateUserSelection[]>([])
+  const { getCurrentUser } = useUserStore()
+  const currentUser = getCurrentUser(roomCode)
 
   const weekDays = ['일', '월', '화', '수', '목', '금', '토']
 
@@ -179,9 +182,25 @@ export function DateGrid({ currentMonth, roomCode, roomId }: DateGridProps) {
                     isSelectable && 'hover:bg-ios-gray'
                   )}
                   onClick={() => {
-                    if (isSelectable) {
-                      setSelectedDate(date)
+                    if (!isSelectable) return
+
+                    // 프로필 미선택 시 경고
+                    if (!currentUser) {
+                      alert('⚠️ 프로필을 먼저 선택하거나 생성해주세요!\n\n우측 상단의 "프로필 선택" 또는 "+" 버튼을 눌러주세요.')
+
+                      // 프로필 선택 버튼 하이라이트
+                      const profileButton = document.querySelector('[title="새 프로필 추가"]')?.parentElement?.parentElement
+                      if (profileButton) {
+                        profileButton.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                        profileButton.classList.add('animate-pulse', 'ring-4', 'ring-red-500', 'ring-offset-2')
+                        setTimeout(() => {
+                          profileButton.classList.remove('animate-pulse', 'ring-4', 'ring-red-500', 'ring-offset-2')
+                        }, 3000)
+                      }
+                      return
                     }
+
+                    setSelectedDate(date)
                   }}
                 >
                   {/* 날짜 */}
