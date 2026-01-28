@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { supabase } from '@/lib/supabase/client'
 import { useUserStore } from '@/lib/stores/user-store'
 import { useRoomStore } from '@/lib/stores/room-store'
+import { AdBanner } from '@/components/ads/ad-banner'
 
 export default function RoomPage() {
   const params = useParams()
@@ -344,6 +345,9 @@ export default function RoomPage() {
         <div className="bg-white rounded-2xl shadow-sm p-6">
           <CalendarView roomCode={roomCode} roomId={currentRoom.id} />
         </div>
+
+        {/* 광고 */}
+        <AdBanner slot="room-bottom" />
       </main>
 
       {/* 프로필 설정 Dialog */}

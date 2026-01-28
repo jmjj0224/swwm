@@ -1,10 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { CreateRoom } from '@/components/room/create-room'
 import { JoinRoom } from '@/components/room/join-room'
 import { Button } from '@/components/ui/button'
 import { SupabaseTest } from '@/components/debug/supabase-test'
+import { AdBanner } from '@/components/ads/ad-banner'
 
 export default function HomePage() {
   const [mode, setMode] = useState<'create' | 'join' | null>(null)
@@ -69,6 +71,27 @@ export default function HomePage() {
 
         {/* 개발용 디버그 도구 */}
         <SupabaseTest />
+
+        {/* 광고 */}
+        <AdBanner slot="homepage-bottom" className="mt-12" />
+
+        {/* 푸터 링크 */}
+        <footer className="mt-12 pt-8 border-t text-center space-y-2">
+          <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+            <Link href="/about" className="hover:text-blue-600 transition">
+              소개
+            </Link>
+            <Link href="/privacy" className="hover:text-blue-600 transition">
+              개인정보처리방침
+            </Link>
+            <Link href="/terms" className="hover:text-blue-600 transition">
+              이용약관
+            </Link>
+          </div>
+          <p className="text-xs text-gray-500">
+            © 2025 SWWM. All rights reserved.
+          </p>
+        </footer>
       </div>
     </main>
   )
