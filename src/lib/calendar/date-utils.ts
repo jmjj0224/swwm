@@ -18,20 +18,14 @@ import { ko } from 'date-fns/locale'
 export { format, addMonths, subMonths, isSameDay, isSameMonth, isToday }
 
 /**
- * 현재 날짜 이후의 날짜들만 생성 (과거 날짜 제외)
+ * 캘린더 날짜 생성 (과거 날짜도 포함하여 요일 정렬 유지)
  */
 export function generateCalendarDates(month: Date): Date[] {
   const start = startOfWeek(startOfMonth(month), { weekStartsOn: 0 }) // 일요일 시작
   const end = endOfWeek(endOfMonth(month), { weekStartsOn: 0 })
 
-  const allDates = eachDayOfInterval({ start, end })
-  const today = startOfDay(new Date())
-
-  // 오늘 이후의 날짜만 필터링 (과거 날짜 제외)
-  return allDates.map((date) => {
-    const isBeforeToday = isBefore(startOfDay(date), today)
-    return isBeforeToday ? null : date
-  }).filter(Boolean) as Date[]
+  // 모든 날짜 반환 (과거 날짜도 포함)
+  return eachDayOfInterval({ start, end })
 }
 
 /**
