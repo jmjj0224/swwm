@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Supabase 트리거 수정</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <h1>Supabase 트리거 수정</h1>
+  <p>이 페이지를 열면 자동으로 잘못된 트리거를 제거합니다.</p>
+  <div id="status">실행 중...</div>
+
+  <script>
+    const SUPABASE_URL = 'https://zsyaclpdkxkcgymejedg.supabase.co'
+    const SUPABASE_KEY = 'sb_publishable_t_TWB2d7sTTVdBsF58rr0g_pTj20rET'
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+
+    async function fixTriggers() {
+      const statusEl = document.getElementById('status')
+
+      try {
+        statusEl.innerHTML = '<p>트리거 제거 중...</p>'
+
+        // 잘못된 트리거들을 제거하는 SQL
+        const sql = `
+          -- 시간 선택 트리거 제거
+          DROP TRIGGER IF EXISTS time_selections_broadcast_trigger ON time_selections;
+          DROP FUNCTION IF EXISTS notify_time_selection_changes();
+
+          -- 방 확정 트리거 제거
+          DROP TRIGGER IF EXISTS rooms_confirmation_broadcast_trigger ON rooms;
+          DROP FUNCTION IF EXISTS notify_room_confirmation();
+        `
+
+        const { data, error } = await supabase.rpc('exec_sql', { sql_query: sql })
+
+        if (error) {
+          throw error
+        }
+
+        statusEl.innerHTML = '<p style="color: green;">✅ 성공! 트리거가 제거되었습니다.</p><p>이제 시간 선택이 정상적으로 작동할 것입니다.</p>'
+      } catch (error) {
+        console.error('Error:', error)
+        statusEl.innerHTML = `
+          <p style="color: red;">❌ 에러 발생:</p>
+          <pre>${error.message}</pre>
+          <hr>
+          <p><strong>해결 방법:</strong></p>
+          <ol>
+            <li>Supabase Dashboard로 이동: <a href="https://supabase.com/dashboard/project/zsyaclpdkxkcgymejedg/editor" target="_blank">여기 클릭</a></li>
+            <li>왼쪽 메뉴에서 "SQL Editor" 클릭</li>
+            <li>아래 SQL을 복사해서 실행:</li>
+          </ol>
+          <textarea readonly style="width: 100%; height: 200px; font-family: monospace;">
+-- 잘못된 트리거 제거
+DROP TRIGGER IF EXISTS time_selections_broadcast_trigger ON time_selections;
+DROP FUNCTION IF EXISTS notify_time_selection_changes();
+
+DROP TRIGGER IF EXISTS rooms_confirmation_broadcast_trigger ON rooms;
+DROP FUNCTION IF EXISTS notify_room_confirmation();
+          </textarea>
+        `
+      }
+    }
+
+    // 페이지 로드 시 실행
+    fixTriggers()
+  </script>
+</body>
+</html>
