@@ -29,6 +29,7 @@ import { calculateOverlaps, type OverlapResult, type TimeSelection } from '@/lib
 import { Calendar, Users, Clock, MapPin, CheckCircle2, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 import { RoomGroup, Confirmation } from '@/types/room'
+import { locationSchema, memoSchema, validateInput } from '@/lib/validation/schemas'
 
 interface BestTimeSuggestionsProps {
   roomId: string
@@ -267,6 +268,23 @@ export function BestTimeSuggestions({ roomId }: BestTimeSuggestionsProps) {
   // 약속 확정 처리
   const handleConfirm = async () => {
     if (!confirmingSlot) return
+
+    // 입력 검증
+    if (confirmLocation.trim()) {
+      const locationValidation = validateInput(locationSchema, confirmLocation.trim())
+      if (!locationValidation.success) {
+        alert(locationValidation.error)
+        return
+      }
+    }
+
+    if (confirmMemo.trim()) {
+      const memoValidation = validateInput(memoSchema, confirmMemo.trim())
+      if (!memoValidation.success) {
+        alert(memoValidation.error)
+        return
+      }
+    }
 
     setIsConfirming(true)
 

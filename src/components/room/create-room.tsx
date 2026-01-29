@@ -10,6 +10,7 @@ import { supabase } from '@/lib/supabase/client'
 import { generateRoomCode } from '@/lib/utils/room-code'
 import { Copy, Check, Lock, Sparkles } from 'lucide-react'
 import { BetaBanner } from './beta-banner'
+import { passwordSchema, validateInput } from '@/lib/validation/schemas'
 
 export function CreateRoom() {
   const router = useRouter()
@@ -32,6 +33,16 @@ export function CreateRoom() {
     const code = generateRoomCode()
 
     try {
+      // 비밀번호 검증
+      if (usePassword && password.trim()) {
+        const validation = validateInput(passwordSchema, password.trim())
+        if (!validation.success) {
+          alert(validation.error)
+          setIsCreating(false)
+          return
+        }
+      }
+
       // 비밀번호 해시 (선택 사항)
       let hashedPassword: string | null = null
       if (usePassword && password.trim()) {

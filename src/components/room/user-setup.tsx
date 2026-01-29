@@ -18,6 +18,7 @@ import { useUserStore } from '@/lib/stores/user-store'
 import { getRandomColor, type UserColor } from '@/lib/utils/colors'
 import { RoomGroup } from '@/types/room'
 import { Users, Sparkles } from 'lucide-react'
+import { userNameSchema, validateInput } from '@/lib/validation/schemas'
 
 interface UserSetupProps {
   roomCode: string
@@ -65,8 +66,10 @@ export function UserSetup({ roomCode, roomId, isOpen, onComplete, onClose }: Use
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!name.trim()) {
-      alert('이름을 입력해주세요')
+    // 이름 검증
+    const validation = validateInput(userNameSchema, name)
+    if (!validation.success) {
+      alert(validation.error)
       return
     }
 

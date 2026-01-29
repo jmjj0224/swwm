@@ -15,6 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { groupNameSchema, validateInput } from '@/lib/validation/schemas'
 
 interface GroupManagerProps {
   roomId: string
@@ -57,8 +58,10 @@ export function GroupManager({ roomId, onGroupsChange }: GroupManagerProps) {
   }
 
   const handleCreateGroup = async () => {
-    if (!newGroupName.trim()) {
-      alert('그룹 이름을 입력해주세요')
+    // 그룹 이름 검증
+    const validation = validateInput(groupNameSchema, newGroupName)
+    if (!validation.success) {
+      alert(validation.error)
       return
     }
 

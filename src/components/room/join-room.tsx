@@ -10,6 +10,7 @@ import { supabase } from '@/lib/supabase/client'
 import { validateRoomCode } from '@/lib/utils/room-code'
 import { Lock } from 'lucide-react'
 import { BetaBanner } from './beta-banner'
+import { roomCodeSchema, passwordSchema, validateInput } from '@/lib/validation/schemas'
 
 export function JoinRoom() {
   const router = useRouter()
@@ -30,10 +31,20 @@ export function JoinRoom() {
   const handleJoinRoom = async () => {
     setError(null)
 
-    // 코드 검증
-    if (!validateRoomCode(code)) {
-      setError('올바른 방 코드 형식이 아닙니다 (6자리 영문+숫자)')
+    // Zod 코드 검증
+    const codeValidation = validateInput(roomCodeSchema, code)
+    if (!codeValidation.success) {
+      setError(codeValidation.error || '올바른 방 코드 형식이 아닙니다')
       return
+    }
+
+    // 비밀번호 검증 (필요한 경우)
+    if (needsPassword && password) {
+      const passwordValidation = validateInput(passwordSchema, password)
+      if (!passwordValidation.success) {
+        setError(passwordValidation.error || '올바른 비밀번호 형식이 아닙니다')
+        return
+      }
     }
 
     setIsJoining(true)
