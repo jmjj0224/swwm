@@ -109,7 +109,7 @@ export const createGroupInputSchema = z.object({
 
 // Rate limiting용 - 요청 제한
 export const rateLimitKeySchema = z.object({
-  ip: z.string().ip().optional(),
+  ip: z.string().optional(),
   identifier: z.string().optional(),
 })
 

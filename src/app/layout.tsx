@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
+import Script from 'next/script'
 import './globals.css'
-import { GoogleAdSense } from 'next-google-adsense'
 
 export const metadata: Metadata = {
   title: '약속 캘린더 - SWWM',
@@ -25,12 +25,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  // AdSense 퍼블리셔 ID (환경 변수 또는 기본값)
-  const publisherId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || 'ca-pub-3706841120046770'
-
   return (
     <html lang="ko">
-      <GoogleAdSense publisherId={publisherId} />
+      <head>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3706841120046770"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      </head>
       <body className="antialiased font-sans">
         {children}
       </body>
