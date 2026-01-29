@@ -5,6 +5,7 @@ import { useParams, notFound } from 'next/navigation'
 import { UserSetup } from '@/components/room/user-setup'
 import { CalendarView } from '@/components/calendar/calendar-view'
 import { OnlineUsers } from '@/components/room/online-users'
+import { GroupManager } from '@/components/room/group-manager'
 import { Button } from '@/components/ui/button'
 import { supabase } from '@/lib/supabase/client'
 import { useUserStore } from '@/lib/stores/user-store'
@@ -212,6 +213,7 @@ export default function RoomPage() {
               <p className="text-sm text-gray-600">방 코드: {roomCode}</p>
             </div>
             <div className="flex items-center gap-3">
+              <GroupManager roomId={currentRoom.id} />
               <OnlineUsers roomId={currentRoom.id} roomCode={roomCode.toUpperCase()} onCountChange={setOnlineCount} />
 
               {/* 프로필 표시 */}

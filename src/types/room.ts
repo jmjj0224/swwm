@@ -7,6 +7,9 @@ export interface Room {
   confirmationDate: string | null
   confirmationLocation: string | null
   confirmationMemo: string | null
+  password: string | null  // 비밀번호 (해시). null이면 공개 방
+  isPremium: boolean  // 프리미엄 기능 활성화 (베타 기간에는 모두 true)
+  createdBeforePaidLaunch: boolean  // 유료화 전 생성 (평생 무료)
 }
 
 export interface RoomUser {
@@ -17,6 +20,15 @@ export interface RoomUser {
   color: string
   joinedAt: string
   lastSeenAt: string
+  tags: string[]  // 사용자가 속한 그룹/태그 (예: ["1팀", "보컬"])
+}
+
+export interface RoomGroup {
+  id: string
+  roomId: string
+  name: string
+  color: string
+  createdAt: string
 }
 
 export interface TimeSelection {
@@ -33,6 +45,7 @@ export interface TimeSelection {
 
 export interface CreateRoomInput {
   code: string
+  password?: string  // 선택적 비밀번호
 }
 
 export interface JoinRoomInput {
