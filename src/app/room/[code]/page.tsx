@@ -214,8 +214,8 @@ export default function RoomPage() {
       <header className="bg-white border-b sticky top-0 z-10">
         <div className="w-full px-2 py-3 md:container md:max-w-4xl md:mx-auto md:px-4 md:py-4"
              style={{ paddingTop: 'max(0.75rem, env(safe-area-inset-top))' }}>
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3 flex-shrink-0">
+          <div className="flex items-center justify-between gap-2 md:gap-4">
+            <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
               <Button
                 variant="ghost"
                 size="icon"
@@ -223,7 +223,7 @@ export default function RoomPage() {
                 className="flex-shrink-0"
                 title="메인으로"
               >
-                <Home className="h-5 w-5" />
+                <Home className="h-4 w-4 md:h-5 md:w-5" />
               </Button>
               <RoomSettingsDialog
                 roomId={currentRoom.id}
@@ -231,12 +231,12 @@ export default function RoomPage() {
                 creatorUserId={currentRoom.creator_user_id || null}
                 currentPasswordHash={currentRoom.password_hash || null}
               />
-              <div>
-                <h1 className="text-xl font-bold">약속 캘린더</h1>
-                <p className="text-sm text-gray-600">방 코드: {roomCode}</p>
+              <div className="hidden sm:block">
+                <h1 className="text-lg md:text-xl font-bold">약속 캘린더</h1>
+                <p className="text-xs md:text-sm text-gray-600">방 코드: {roomCode}</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 md:gap-3 overflow-x-auto scrollbar-hide flex-shrink-0 max-w-[60vw]">
               <GroupManager roomId={currentRoom.id} />
               <OnlineUsers roomId={currentRoom.id} roomCode={roomCode.toUpperCase()} onCountChange={setOnlineCount} />
 
@@ -295,20 +295,20 @@ export default function RoomPage() {
                       </button>
                     </div>
 
-                    <div className="space-y-1 mb-3">
+                    <div className="space-y-2 mb-3">
                       {allRoomUsers.map((profile) => (
                         <div
                           key={profile.id}
-                          className={`group flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-50 transition border ${
+                          className={`group rounded-lg hover:bg-gray-50 transition border ${
                             profile.id === currentUser?.id
                               ? 'bg-blue-50 border-blue-200'
                               : 'border-transparent'
                           }`}
                         >
-                          {/* 프로필 선택 버튼 */}
+                          {/* 프로필 정보 */}
                           <button
                             onClick={() => handleSelectProfile(profile.id)}
-                            className="flex-1 flex items-center gap-3"
+                            className="w-full flex items-center gap-3 px-3 py-3"
                           >
                             <div
                               className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
@@ -327,40 +327,42 @@ export default function RoomPage() {
                           </button>
 
                           {/* 작업 버튼 - 가로 스크롤 */}
-                          <div className="flex gap-1 overflow-x-auto scrollbar-hide whitespace-nowrap">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                setEditingProfile(profile)
-                                setShowEditDialog(true)
-                                setShowProfileSelector(false)
-                              }}
-                              className="flex-shrink-0 px-3 py-1.5 text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 rounded font-medium flex items-center gap-1"
-                              title="프로필 편집"
-                            >
-                              <Edit2 className="h-3 w-3" />
-                              편집
-                            </button>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                handleDeleteSchedule(profile.id, profile.name)
-                              }}
-                              className="flex-shrink-0 px-3 py-1.5 text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-700 rounded font-medium"
-                              title="이 사람의 모든 일정 삭제"
-                            >
-                              일정삭제
-                            </button>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                handleDeleteProfile(profile.id, profile.name)
-                              }}
-                              className="flex-shrink-0 px-3 py-1.5 text-xs bg-red-100 hover:bg-red-200 text-red-700 rounded font-medium"
-                              title="프로필과 모든 일정 영구 삭제"
-                            >
-                              삭제
-                            </button>
+                          <div className="px-3 pb-3 -mt-2">
+                            <div className="flex gap-1.5 overflow-x-auto scrollbar-hide">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  setEditingProfile(profile)
+                                  setShowEditDialog(true)
+                                  setShowProfileSelector(false)
+                                }}
+                                className="flex-shrink-0 px-3 py-1.5 text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 rounded font-medium flex items-center gap-1"
+                                title="프로필 편집"
+                              >
+                                <Edit2 className="h-3 w-3" />
+                                편집
+                              </button>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  handleDeleteSchedule(profile.id, profile.name)
+                                }}
+                                className="flex-shrink-0 px-3 py-1.5 text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-700 rounded font-medium whitespace-nowrap"
+                                title="이 사람의 모든 일정 삭제"
+                              >
+                                일정삭제
+                              </button>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  handleDeleteProfile(profile.id, profile.name)
+                                }}
+                                className="flex-shrink-0 px-3 py-1.5 text-xs bg-red-100 hover:bg-red-200 text-red-700 rounded font-medium"
+                                title="프로필과 모든 일정 영구 삭제"
+                              >
+                                삭제
+                              </button>
+                            </div>
                           </div>
                         </div>
                       ))}

@@ -93,21 +93,26 @@ export function OnlineUsers({ roomId, roomCode, onCountChange }: OnlineUsersProp
   if (onlineUsers.length === 0) return null
 
   return (
-    <div className="flex items-center gap-2 overflow-x-auto">
-      <div className="text-xs text-gray-500 font-medium whitespace-nowrap">
+    <div className="flex items-center gap-1 md:gap-2 flex-shrink-0">
+      <div className="text-xs text-gray-500 font-medium whitespace-nowrap hidden sm:inline">
         온라인 {onlineUsers.length}명
       </div>
-      <div className="flex items-center gap-1">
-        {onlineUsers.map((user) => (
+      <div className="flex items-center gap-0.5 md:gap-1">
+        {onlineUsers.slice(0, 3).map((user) => (
           <div
             key={user.userId}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-semibold border-2 border-white shadow-sm"
+            className="w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center text-white text-xs font-semibold border-2 border-white shadow-sm flex-shrink-0"
             style={{ backgroundColor: user.color }}
             title={user.name}
           >
             {user.name[0]}
           </div>
         ))}
+        {onlineUsers.length > 3 && (
+          <div className="w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center bg-gray-400 text-white text-xs font-semibold border-2 border-white shadow-sm flex-shrink-0">
+            +{onlineUsers.length - 3}
+          </div>
+        )}
       </div>
     </div>
   )

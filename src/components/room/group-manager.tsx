@@ -117,13 +117,14 @@ export function GroupManager({ roomId, onGroupsChange }: GroupManagerProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="gap-2">
+        <Button variant="outline" size="sm" className="gap-1 md:gap-2 flex-shrink-0" title="그룹 관리">
           <Users className="h-4 w-4" />
-          <span>그룹 관리</span>
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold">
-            <Sparkles className="h-3 w-3" />
-            {groups.length}
-          </span>
+          <span className="hidden sm:inline">그룹</span>
+          {groups.length > 0 && (
+            <span className="inline-flex items-center justify-center w-5 h-5 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold">
+              {groups.length}
+            </span>
+          )}
         </Button>
       </DialogTrigger>
 

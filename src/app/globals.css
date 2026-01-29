@@ -87,9 +87,17 @@ main,
 .scrollbar-hide {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+  -webkit-overflow-scrolling: touch; /* iOS 부드러운 스크롤 */
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;  /* Chrome, Safari, Opera */
+}
+
+/* 가로 스크롤 강제 활성화 */
+.overflow-x-auto {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Custom scrollbar for webkit browsers */
