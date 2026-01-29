@@ -91,6 +91,20 @@ export function UserSetup({ roomCode, roomId, isOpen, onComplete, onClose }: Use
 
       if (error) throw error
 
+      // 첫 번째 사용자인지 확인하여 방장으로 설정
+      const { data: existingUsers } = await supabase
+        .from('room_users')
+        .select('user_id')
+        .eq('room_id', roomId)
+
+      if (existingUsers && existingUsers.length === 1) {
+        // 이 사용자가 첫 번째 사용자이므로 방장으로 설정
+        await supabase
+          .from('rooms')
+          .update({ creator_user_id: userId })
+          .eq('id', roomId)
+      }
+
       // 프로필 추가
       const user = {
         id: userId,

@@ -8,6 +8,7 @@ export interface Room {
   confirmationLocation: string | null
   confirmationMemo: string | null
   password: string | null  // 비밀번호 (해시). null이면 공개 방
+  creatorUserId: string | null  // 방장 (방을 만든 사용자 ID)
   isPremium: boolean  // 프리미엄 기능 활성화 (베타 기간에는 모두 true)
   createdBeforePaidLaunch: boolean  // 유료화 전 생성 (평생 무료)
 }

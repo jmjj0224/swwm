@@ -7,6 +7,7 @@ import { CalendarView } from '@/components/calendar/calendar-view'
 import { OnlineUsers } from '@/components/room/online-users'
 import { GroupManager } from '@/components/room/group-manager'
 import { EditProfileDialog } from '@/components/room/edit-profile-dialog'
+import { RoomSettingsDialog } from '@/components/room/room-settings-dialog'
 import { Button } from '@/components/ui/button'
 import { supabase } from '@/lib/supabase/client'
 import { useUserStore } from '@/lib/stores/user-store'
@@ -223,6 +224,12 @@ export default function RoomPage() {
               >
                 <Home className="h-5 w-5" />
               </Button>
+              <RoomSettingsDialog
+                roomId={currentRoom.id}
+                roomCode={roomCode.toUpperCase()}
+                creatorUserId={currentRoom.creator_user_id || null}
+                currentPasswordHash={currentRoom.password_hash || null}
+              />
               <div>
                 <h1 className="text-xl font-bold">약속 캘린더</h1>
                 <p className="text-sm text-gray-600">방 코드: {roomCode}</p>
