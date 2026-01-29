@@ -188,8 +188,8 @@ export default function AboutPage() {
               <div className="space-y-2">
                 <p className="flex items-center gap-2">
                   <span className="font-semibold">이메일:</span>
-                  <a href="mailto:contact@swwm.com" className="text-blue-600 hover:underline">
-                    contact@swwm.com
+                  <a href="mailto:swwmcontact@gmail.com" className="text-blue-600 hover:underline">
+                    swwmcontact@gmail.com
                   </a>
                 </p>
                 <p className="flex items-center gap-2">

@@ -105,7 +105,7 @@ export default function PrivacyPage() {
             </p>
             <div className="bg-gray-50 p-4 rounded">
               <p><strong>개인정보 보호책임자</strong></p>
-              <p>이메일: privacy@swwm.com</p>
+              <p>이메일: swwmcontact@gmail.com</p>
             </div>
           </section>
 
