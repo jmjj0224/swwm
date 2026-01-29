@@ -309,7 +309,7 @@ export default function RoomPage() {
 
                     <div
                       ref={profileDropdownRef}
-                      className="absolute top-full right-0 mt-2 bg-white rounded-xl shadow-xl border p-4 md:p-5 z-50 min-w-[300px] md:min-w-[340px] max-h-[70vh] max-h-[70dvh] overflow-y-auto safe-area-padding"
+                      className="fixed top-20 right-4 bg-white rounded-xl shadow-xl border p-4 md:p-5 z-50 min-w-[300px] md:min-w-[340px] max-h-[70vh] max-h-[70dvh] overflow-y-auto safe-area-padding"
                     >
                     <div className="flex items-center justify-between mb-4 pb-3 border-b">
                       <h3 className="text-base font-bold text-gray-800 text-center flex-1">
