@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { CreateRoom } from '@/components/room/create-room'
 import { JoinRoom } from '@/components/room/join-room'
 import { Button } from '@/components/ui/button'
-import { SupabaseTest } from '@/components/debug/supabase-test'
 import { AdBanner } from '@/components/ads/ad-banner'
 
 export default function HomePage() {
@@ -68,9 +67,6 @@ export default function HomePage() {
             </Button>
           </div>
         )}
-
-        {/* 개발용 디버그 도구 */}
-        <SupabaseTest />
 
         {/* 광고 */}
         <AdBanner slot="homepage-bottom" className="mt-12" />

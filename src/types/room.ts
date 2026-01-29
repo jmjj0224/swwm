@@ -63,3 +63,29 @@ export interface SelectTimeInput {
   startTime?: string
   endTime?: string
 }
+
+export interface Confirmation {
+  id: string
+  roomId: string
+  date: string
+  startTime: string | null
+  endTime: string | null
+  isAllDay: boolean
+  participantUserIds: string[]
+  participantGroupNames: string[] | null
+  location: string | null
+  memo: string | null
+  confirmedAt: string
+}
+
+export interface CreateConfirmationInput {
+  roomId: string
+  date: string
+  startTime?: string
+  endTime?: string
+  isAllDay?: boolean
+  participantUserIds: string[]
+  participantGroupNames?: string[]
+  location?: string
+  memo?: string
+}

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useParams, notFound } from 'next/navigation'
+import { useParams, notFound, useRouter } from 'next/navigation'
 import { UserSetup } from '@/components/room/user-setup'
 import { CalendarView } from '@/components/calendar/calendar-view'
 import { OnlineUsers } from '@/components/room/online-users'
@@ -11,9 +11,11 @@ import { supabase } from '@/lib/supabase/client'
 import { useUserStore } from '@/lib/stores/user-store'
 import { useRoomStore } from '@/lib/stores/room-store'
 import { AdBanner } from '@/components/ads/ad-banner'
+import { Home } from 'lucide-react'
 
 export default function RoomPage() {
   const params = useParams()
+  const router = useRouter()
   const roomCode = params.code as string
   const { getCurrentUser, getRoomProfiles, selectProfile, setCachedUsers } = useUserStore()
   const { currentRoom, setCurrentRoom, setLoading, setError } = useRoomStore()
@@ -208,9 +210,20 @@ export default function RoomPage() {
       <header className="bg-white border-b sticky top-0 z-10">
         <div className="container max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between gap-4">
-            <div className="flex-shrink-0">
-              <h1 className="text-xl font-bold">약속 캘린더</h1>
-              <p className="text-sm text-gray-600">방 코드: {roomCode}</p>
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => router.push('/')}
+                className="flex-shrink-0"
+                title="메인으로"
+              >
+                <Home className="h-5 w-5" />
+              </Button>
+              <div>
+                <h1 className="text-xl font-bold">약속 캘린더</h1>
+                <p className="text-sm text-gray-600">방 코드: {roomCode}</p>
+              </div>
             </div>
             <div className="flex items-center gap-3">
               <GroupManager roomId={currentRoom.id} />
