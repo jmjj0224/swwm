@@ -54,6 +54,8 @@ body {
   max-width: 100%;
   overflow-x: hidden; /* 가로 스크롤 강제 방지 */
   position: relative;
+  overscroll-behavior: none; /* 스크롤 튕김 방지 (핵심) */
+  touch-action: manipulation; /* 더블탭 줌 방지 */
 }
 
 body {
@@ -65,6 +67,29 @@ main,
 .container {
   width: 100% !important;
   max-width: 100% !important;
+}
+
+/* 모바일 화면 높이 최적화 (주소창 고려) */
+.min-h-screen {
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic Viewport Height - 주소창 제외한 실제 화면 높이 */
+}
+
+/* Safe Area (노치, 하단 홈바 영역 보호) */
+.safe-area-padding {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* 가로 스크롤 패턴 (버튼 등) - 스크롤바 숨김 */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
 }
 
 /* Custom scrollbar for webkit browsers */

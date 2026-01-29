@@ -11,7 +11,7 @@ export default function HomePage() {
   const [mode, setMode] = useState<'create' | 'join' | null>(null)
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-ios-gray to-white">
+    <main className="min-h-screen bg-gradient-to-b from-ios-gray to-white safe-area-padding">
       <div className="container max-w-md mx-auto px-4 py-20">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-2">

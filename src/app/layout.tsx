@@ -20,6 +20,7 @@ export const viewport: Viewport = {
   maximumScale: 1,
   userScalable: false, // 핀치 줌 방지 (앱처럼 보이게)
   viewportFit: 'cover', // 안드로이드 노치 영역 대응
+  interactiveWidget: 'resizes-content', // 키보드가 올라올 때 화면 조정
 }
 
 export default function RootLayout({

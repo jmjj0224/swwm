@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function GuidePage() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white safe-area-padding">
       <div className="container max-w-4xl mx-auto px-4 py-12">
         {/* 헤더 */}
         <div className="text-center mb-12">

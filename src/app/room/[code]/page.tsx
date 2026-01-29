@@ -210,9 +210,10 @@ export default function RoomPage() {
   }
 
   return (
-    <div className="min-h-screen bg-ios-gray">
+    <div className="min-h-screen bg-ios-gray safe-area-padding">
       <header className="bg-white border-b sticky top-0 z-10">
-        <div className="w-full px-2 py-3 md:container md:max-w-4xl md:mx-auto md:px-4 md:py-4">
+        <div className="w-full px-2 py-3 md:container md:max-w-4xl md:mx-auto md:px-4 md:py-4"
+             style={{ paddingTop: 'max(0.75rem, env(safe-area-inset-top))' }}>
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 flex-shrink-0">
               <Button
@@ -281,7 +282,7 @@ export default function RoomPage() {
 
                 {/* 프로필 선택 드롭다운 */}
                 {showProfileSelector && allRoomUsers.length > 0 && (
-                  <div className="absolute top-16 right-4 bg-white rounded-lg shadow-xl border-2 p-3 z-50 min-w-[320px] max-h-[500px] overflow-y-auto">
+                  <div className="absolute top-16 right-4 bg-white rounded-lg shadow-xl border-2 p-3 z-50 min-w-[280px] md:min-w-[320px] max-h-[70vh] max-h-[70dvh] overflow-y-auto safe-area-padding">
                     <div className="flex items-center justify-between mb-3 pb-2 border-b">
                       <h3 className="text-sm font-bold text-gray-800">
                         일정 입력할 프로필 선택
@@ -325,8 +326,8 @@ export default function RoomPage() {
                             </div>
                           </button>
 
-                          {/* 작업 버튼 */}
-                          <div className="flex gap-1">
+                          {/* 작업 버튼 - 가로 스크롤 */}
+                          <div className="flex gap-1 overflow-x-auto scrollbar-hide whitespace-nowrap">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation()
@@ -334,7 +335,7 @@ export default function RoomPage() {
                                 setShowEditDialog(true)
                                 setShowProfileSelector(false)
                               }}
-                              className="px-3 py-1.5 text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 rounded font-medium flex items-center gap-1"
+                              className="flex-shrink-0 px-3 py-1.5 text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 rounded font-medium flex items-center gap-1"
                               title="프로필 편집"
                             >
                               <Edit2 className="h-3 w-3" />
@@ -345,7 +346,7 @@ export default function RoomPage() {
                                 e.stopPropagation()
                                 handleDeleteSchedule(profile.id, profile.name)
                               }}
-                              className="px-3 py-1.5 text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-700 rounded font-medium"
+                              className="flex-shrink-0 px-3 py-1.5 text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-700 rounded font-medium"
                               title="이 사람의 모든 일정 삭제"
                             >
                               일정삭제
@@ -355,7 +356,7 @@ export default function RoomPage() {
                                 e.stopPropagation()
                                 handleDeleteProfile(profile.id, profile.name)
                               }}
-                              className="px-3 py-1.5 text-xs bg-red-100 hover:bg-red-200 text-red-700 rounded font-medium"
+                              className="flex-shrink-0 px-3 py-1.5 text-xs bg-red-100 hover:bg-red-200 text-red-700 rounded font-medium"
                               title="프로필과 모든 일정 영구 삭제"
                             >
                               삭제
