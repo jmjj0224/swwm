@@ -6,12 +6,13 @@ import { UserSetup } from '@/components/room/user-setup'
 import { CalendarView } from '@/components/calendar/calendar-view'
 import { OnlineUsers } from '@/components/room/online-users'
 import { GroupManager } from '@/components/room/group-manager'
+import { EditProfileDialog } from '@/components/room/edit-profile-dialog'
 import { Button } from '@/components/ui/button'
 import { supabase } from '@/lib/supabase/client'
 import { useUserStore } from '@/lib/stores/user-store'
 import { useRoomStore } from '@/lib/stores/room-store'
 import { AdBanner } from '@/components/ads/ad-banner'
-import { Home } from 'lucide-react'
+import { Home, Edit2 } from 'lucide-react'
 
 export default function RoomPage() {
   const params = useParams()
@@ -23,6 +24,8 @@ export default function RoomPage() {
   const [showSetup, setShowSetup] = useState(false)
   const [onlineCount, setOnlineCount] = useState(0)
   const [showProfileSelector, setShowProfileSelector] = useState(false)
+  const [showEditDialog, setShowEditDialog] = useState(false)
+  const [editingProfile, setEditingProfile] = useState<any | null>(null)
   const [allRoomUsers, setAllRoomUsers] = useState<any[]>([])
 
   const currentUser = getCurrentUser(roomCode.toUpperCase())
@@ -320,6 +323,19 @@ export default function RoomPage() {
                             <button
                               onClick={(e) => {
                                 e.stopPropagation()
+                                setEditingProfile(profile)
+                                setShowEditDialog(true)
+                                setShowProfileSelector(false)
+                              }}
+                              className="px-3 py-1.5 text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 rounded font-medium flex items-center gap-1"
+                              title="프로필 편집"
+                            >
+                              <Edit2 className="h-3 w-3" />
+                              편집
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
                                 handleDeleteSchedule(profile.id, profile.name)
                               }}
                               className="px-3 py-1.5 text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-700 rounded font-medium"
@@ -373,6 +389,40 @@ export default function RoomPage() {
           isOpen={showSetup}
           onComplete={handleSetupComplete}
           onClose={() => setShowSetup(false)}
+        />
+      )}
+
+      {/* 프로필 편집 Dialog */}
+      {currentRoom && editingProfile && (
+        <EditProfileDialog
+          isOpen={showEditDialog}
+          onClose={() => {
+            setShowEditDialog(false)
+            setEditingProfile(null)
+          }}
+          profile={editingProfile}
+          roomId={currentRoom.id}
+          roomCode={roomCode.toUpperCase()}
+          onUpdate={async () => {
+            // 사용자 목록 새로고침
+            const { data: users } = await supabase
+              .from('room_users')
+              .select('*')
+              .eq('room_id', currentRoom.id)
+              .order('joined_at', { ascending: true })
+
+            if (users) {
+              const mappedUsers = users.map((u) => ({
+                id: u.user_id,
+                name: u.name,
+                color: u.color,
+                joinedAt: u.joined_at,
+                tags: u.tags || [],
+              }))
+              setAllRoomUsers(mappedUsers)
+              setCachedUsers(roomCode.toUpperCase(), mappedUsers)
+            }
+          }}
         />
       )}
     </div>

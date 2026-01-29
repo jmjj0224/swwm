@@ -5,6 +5,7 @@ export interface User {
   id: string
   name: string
   color: string
+  tags?: string[]
 }
 
 interface CurrentProfiles {
@@ -30,6 +31,9 @@ interface UserState {
 
   // 프로필 추가 (DB + 캐시 + 선택)
   addProfile: (roomCode: string, user: User) => void
+
+  // 프로필 수정 (캐시)
+  updateProfile: (roomCode: string, userId: string, updates: Partial<User>) => void
 
   // 프로필 선택
   selectProfile: (roomCode: string, userId: string) => void
@@ -88,6 +92,22 @@ export const useUserStore = create<UserState>()(
             currentProfiles: {
               ...state.currentProfiles,
               [roomCode]: user.id,
+            },
+          }
+        })
+      },
+
+      updateProfile: (roomCode: string, userId: string, updates: Partial<User>) => {
+        set((state) => {
+          const cached = state.cachedUsers[roomCode] || []
+          const updatedCache = cached.map((user) =>
+            user.id === userId ? { ...user, ...updates } : user
+          )
+
+          return {
+            cachedUsers: {
+              ...state.cachedUsers,
+              [roomCode]: updatedCache,
             },
           }
         })
