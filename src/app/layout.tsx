@@ -27,15 +27,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <head>
+      <head />
+      <body className="antialiased font-sans">
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3706841120046770"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
+          strategy="beforeInteractive"
         />
-      </head>
-      <body className="antialiased font-sans">
         {children}
       </body>
     </html>

@@ -144,14 +144,14 @@ export function DateGrid({ currentMonth, roomCode, roomId }: DateGridProps) {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2 md:space-y-4">
       {/* 요일 헤더 */}
-      <div className="grid grid-cols-7 gap-2 mb-2">
+      <div className="grid grid-cols-7 gap-0.5 md:gap-2 mb-2">
         {weekDays.map((day, index) => (
           <div
             key={day}
             className={cn(
-              'text-center text-sm font-semibold py-2',
+              'text-center text-xs md:text-sm font-semibold py-1 md:py-2',
               index === 0 && 'text-red-500', // 일요일
               index === 6 && 'text-blue-500' // 토요일
             )}
@@ -162,9 +162,9 @@ export function DateGrid({ currentMonth, roomCode, roomId }: DateGridProps) {
       </div>
 
       {/* 날짜 그리드 */}
-      <div className="space-y-2">
+      <div className="space-y-1 md:space-y-2">
         {weeks.map((week, weekIndex) => (
-          <div key={weekIndex} className="grid grid-cols-7 gap-2">
+          <div key={weekIndex} className="grid grid-cols-7 gap-0.5 md:gap-2">
             {week.map((date, dayIndex) => {
               const isCurrentMonth = isSameMonth(date, currentMonth)
               const isCurrentDay = isToday(date)
@@ -175,7 +175,7 @@ export function DateGrid({ currentMonth, roomCode, roomId }: DateGridProps) {
                 <Card
                   key={dayIndex}
                   className={cn(
-                    'aspect-square flex flex-col items-center justify-between p-2 cursor-pointer transition-all hover:shadow-md',
+                    'aspect-square flex flex-col items-center justify-between p-1 md:p-2 cursor-pointer transition-all hover:shadow-md',
                     !isCurrentMonth && 'opacity-40',
                     !isSelectable && 'opacity-30 cursor-not-allowed bg-gray-100',
                     isCurrentDay && 'ring-2 ring-ios-blue',
@@ -207,7 +207,7 @@ export function DateGrid({ currentMonth, roomCode, roomId }: DateGridProps) {
                   <div className="text-center w-full">
                     <div
                       className={cn(
-                        'text-lg font-semibold',
+                        'text-sm md:text-lg font-semibold',
                         isCurrentDay && 'text-ios-blue',
                         !isSelectable && 'text-gray-400'
                       )}
@@ -215,17 +215,17 @@ export function DateGrid({ currentMonth, roomCode, roomId }: DateGridProps) {
                       {formatKoreanDate(date, 'd')}
                     </div>
                     {isCurrentDay && (
-                      <div className="text-xs text-ios-blue font-medium">오늘</div>
+                      <div className="text-[10px] md:text-xs text-ios-blue font-medium">오늘</div>
                     )}
                   </div>
 
                   {/* 사용자 아바타 */}
                   {users.length > 0 && (
-                    <div className="flex gap-1 flex-wrap justify-center w-full mt-1">
+                    <div className="flex gap-0.5 md:gap-1 flex-wrap justify-center w-full mt-0.5 md:mt-1">
                       {users.slice(0, 3).map((user) => (
                         <div
                           key={user.userId}
-                          className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-semibold"
+                          className="w-4 h-4 md:w-6 md:h-6 rounded-full flex items-center justify-center text-white text-[8px] md:text-xs font-semibold"
                           style={{ backgroundColor: user.color }}
                           title={user.name}
                         >
@@ -233,7 +233,7 @@ export function DateGrid({ currentMonth, roomCode, roomId }: DateGridProps) {
                         </div>
                       ))}
                       {users.length > 3 && (
-                        <div className="w-6 h-6 rounded-full flex items-center justify-center bg-gray-400 text-white text-xs font-semibold">
+                        <div className="w-4 h-4 md:w-6 md:h-6 rounded-full flex items-center justify-center bg-gray-400 text-white text-[8px] md:text-xs font-semibold">
                           +{users.length - 3}
                         </div>
                       )}
