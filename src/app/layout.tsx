@@ -25,9 +25,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // AdSense 퍼블리셔 ID (환경 변수 또는 기본값)
+  const publisherId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || 'ca-pub-3706841120046770'
+
   return (
     <html lang="ko">
-      <GoogleAdSense publisherId={process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || ''} />
+      <GoogleAdSense publisherId={publisherId} />
       <body className="antialiased font-sans">
         {children}
       </body>

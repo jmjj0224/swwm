@@ -1,32 +1,43 @@
 'use client'
 
-import { AdUnit } from 'next-google-adsense'
+import { useEffect } from 'react'
 
 interface AdBannerProps {
   slot?: string
   className?: string
-  layout?: 'display' | 'in-article' | 'in-feed'
+  format?: 'auto' | 'fluid' | 'rectangle' | 'vertical' | 'horizontal'
+  responsive?: boolean
 }
 
 export function AdBanner({
-  slot = '0000000000',
+  slot = 'auto',
   className = '',
-  layout = 'display'
+  format = 'auto',
+  responsive = true,
 }: AdBannerProps) {
-  const publisherId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID
+  const publisherId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || 'ca-pub-3706841120046770'
 
-  // AdSense 클라이언트 ID가 없으면 렌더링하지 않음
-  if (!publisherId) {
-    return null
-  }
+  useEffect(() => {
+    try {
+      // AdSense 광고 로드
+      if (typeof window !== 'undefined') {
+        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({})
+      }
+    } catch (error) {
+      console.error('AdSense error:', error)
+    }
+  }, [])
 
   return (
     <div className={`my-8 flex justify-center ${className}`}>
       <div className="w-full max-w-4xl">
-        <AdUnit
-          publisherId={publisherId}
-          slotId={slot}
-          layout={layout}
+        <ins
+          className="adsbygoogle"
+          style={{ display: 'block' }}
+          data-ad-client={publisherId}
+          data-ad-slot={slot === 'auto' ? undefined : slot}
+          data-ad-format={format}
+          data-full-width-responsive={responsive ? 'true' : 'false'}
         />
       </div>
     </div>
