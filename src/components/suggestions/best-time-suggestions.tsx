@@ -66,7 +66,20 @@ export function BestTimeSuggestions({ roomId }: BestTimeSuggestionsProps) {
     if (!roomId) return
     loadGroups()
     loadConfirmations()
+    loadInitialUserCount()
   }, [roomId])
+
+  // 초기 사용자 수 로드 (버튼 활성화용)
+  const loadInitialUserCount = async () => {
+    const { data: users } = await supabase
+      .from('room_users')
+      .select('user_id')
+      .eq('room_id', roomId)
+
+    if (users) {
+      setTotalUsers(users.length)
+    }
+  }
 
   const loadGroups = async () => {
     const { data } = await supabase
