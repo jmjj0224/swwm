@@ -212,7 +212,7 @@ export default function RoomPage() {
   return (
     <div className="min-h-screen bg-ios-gray">
       <header className="bg-white border-b sticky top-0 z-10">
-        <div className="container max-w-4xl mx-auto px-4 py-4">
+        <div className="w-full px-2 py-3 md:container md:max-w-4xl md:mx-auto md:px-4 md:py-4">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 flex-shrink-0">
               <Button
@@ -379,8 +379,8 @@ export default function RoomPage() {
         </div>
       </header>
 
-      <main className="container max-w-4xl mx-auto px-4 py-6">
-        <div className="bg-white rounded-2xl shadow-sm p-6">
+      <main className="w-full px-2 py-4 md:container md:max-w-4xl md:mx-auto md:px-4 md:py-6">
+        <div className="bg-white rounded-lg md:rounded-2xl shadow-sm p-4 md:p-6">
           <CalendarView roomCode={roomCode} roomId={currentRoom.id} />
         </div>
 
