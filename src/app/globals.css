@@ -48,6 +48,25 @@ html {
   scroll-behavior: smooth;
 }
 
+/* 안드로이드 화면 쏠림 방지 */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden; /* 가로 스크롤 강제 방지 */
+  position: relative;
+}
+
+body {
+  width: 100%; /* 100vw 대신 사용 */
+}
+
+/* 메인 컨테이너 - 100vw 대신 100% 사용 */
+main,
+.container {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
 /* Custom scrollbar for webkit browsers */
 ::-webkit-scrollbar {
   width: 8px;

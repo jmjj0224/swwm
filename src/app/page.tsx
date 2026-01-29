@@ -74,6 +74,9 @@ export default function HomePage() {
         {/* 푸터 링크 */}
         <footer className="mt-12 pt-8 border-t text-center space-y-2">
           <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+            <Link href="/guide" className="hover:text-blue-600 transition font-semibold">
+              사용 가이드
+            </Link>
             <Link href="/about" className="hover:text-blue-600 transition">
               소개
             </Link>

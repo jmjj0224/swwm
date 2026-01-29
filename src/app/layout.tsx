@@ -18,6 +18,8 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
+  userScalable: false, // 핀치 줌 방지 (앱처럼 보이게)
+  viewportFit: 'cover', // 안드로이드 노치 영역 대응
 }
 
 export default function RootLayout({
