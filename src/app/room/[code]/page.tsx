@@ -384,8 +384,8 @@ export default function RoomPage() {
           <CalendarView roomCode={roomCode} roomId={currentRoom.id} />
         </div>
 
-        {/* 광고 */}
-        <AdBanner slot="room-bottom" />
+        {/* 광고 - AdSense 승인 후 표시됨 */}
+        <AdBanner />
       </main>
 
       {/* 프로필 설정 Dialog */}

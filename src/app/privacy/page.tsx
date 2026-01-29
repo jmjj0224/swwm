@@ -120,7 +120,7 @@ export default function PrivacyPage() {
         </article>
 
         {/* 광고 */}
-        <AdBanner slot="privacy-bottom" />
+        <AdBanner />
       </div>
     </div>
   )

@@ -68,8 +68,8 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* 광고 */}
-        <AdBanner slot="homepage-bottom" className="mt-12" />
+        {/* 광고 - AdSense 승인 후 표시됨 */}
+        <AdBanner className="mt-12" />
 
         {/* 푸터 링크 */}
         <footer className="mt-12 pt-8 border-t text-center space-y-2">

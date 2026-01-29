@@ -10,7 +10,7 @@ interface AdBannerProps {
 }
 
 export function AdBanner({
-  slot = 'auto',
+  slot,
   className = '',
   format = 'auto',
   responsive = true,
@@ -28,6 +28,7 @@ export function AdBanner({
     }
   }, [])
 
+  // AdSense 승인 전에는 광고가 표시되지 않으므로 공간만 예약
   return (
     <div className={`my-8 flex justify-center ${className}`}>
       <div className="w-full max-w-4xl">
@@ -35,7 +36,7 @@ export function AdBanner({
           className="adsbygoogle"
           style={{ display: 'block' }}
           data-ad-client={publisherId}
-          data-ad-slot={slot === 'auto' ? undefined : slot}
+          data-ad-slot={slot}
           data-ad-format={format}
           data-full-width-responsive={responsive ? 'true' : 'false'}
         />

@@ -204,7 +204,7 @@ export default function AboutPage() {
         </article>
 
         {/* 광고 */}
-        <AdBanner slot="about-bottom" />
+        <AdBanner />
       </div>
     </div>
   )

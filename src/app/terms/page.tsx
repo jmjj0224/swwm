@@ -152,7 +152,7 @@ export default function TermsPage() {
         </article>
 
         {/* 광고 */}
-        <AdBanner slot="terms-bottom" />
+        <AdBanner />
       </div>
     </div>
   )
