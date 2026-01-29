@@ -127,83 +127,85 @@ export function EditProfileDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-md max-h-[85vh] max-h-[85dvh] overflow-hidden flex flex-col">
+        <DialogHeader className="flex-shrink-0">
           <DialogTitle>프로필 수정</DialogTitle>
           <DialogDescription>이름, 색상, 그룹을 변경할 수 있습니다</DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* 이름 */}
-          <div className="space-y-2">
-            <Label htmlFor="edit-name">이름</Label>
-            <Input
-              id="edit-name"
-              placeholder="홍길동"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              maxLength={50}
-              autoFocus
-            />
-          </div>
-
-          {/* 색상 */}
-          <div className="space-y-2">
-            <Label>색상 선택</Label>
-            <ColorPicker
-              selectedColor={selectedColor.value}
-              onColorSelect={setSelectedColor}
-            />
-            <p className="text-sm text-gray-500 text-center mt-2">
-              선택한 색상: <span className="font-semibold">{selectedColor.name}</span>
-            </p>
-          </div>
-
-          {/* 그룹 태그 선택 */}
-          {groups.length > 0 && (
-            <div className="space-y-3 p-4 bg-purple-50 border border-purple-200 rounded-lg">
-              <div className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-purple-600" />
-                <Label className="text-sm font-semibold text-purple-900">
-                  소속 그룹 (선택사항)
-                </Label>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-purple-200 text-purple-700 rounded-full text-xs font-semibold">
-                  <Sparkles className="h-3 w-3" />
-                  프리미엄
-                </span>
-              </div>
-              <p className="text-xs text-purple-800">
-                여러 그룹에 속할 수 있습니다 (다중 선택 가능)
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {groups.map((group) => (
-                  <button
-                    key={group.id}
-                    type="button"
-                    onClick={() => toggleTag(group.name)}
-                    className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition ${
-                      selectedTags.includes(group.name)
-                        ? 'bg-white border-2 shadow-sm'
-                        : 'bg-white/50 border border-purple-200 hover:bg-white'
-                    }`}
-                    style={{
-                      borderColor: selectedTags.includes(group.name)
-                        ? group.color
-                        : undefined,
-                    }}
-                  >
-                    <div
-                      className="w-3 h-3 rounded-full"
-                      style={{ backgroundColor: group.color }}
-                    />
-                    <span>{group.name}</span>
-                  </button>
-                ))}
-              </div>
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+          <div className="space-y-6 overflow-y-auto flex-1 px-1">
+            {/* 이름 */}
+            <div className="space-y-2">
+              <Label htmlFor="edit-name">이름</Label>
+              <Input
+                id="edit-name"
+                placeholder="홍길동"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                maxLength={50}
+                autoFocus
+              />
             </div>
-          )}
 
-          <DialogFooter>
+            {/* 색상 */}
+            <div className="space-y-2">
+              <Label>색상 선택</Label>
+              <ColorPicker
+                selectedColor={selectedColor.value}
+                onColorSelect={setSelectedColor}
+              />
+              <p className="text-sm text-gray-500 text-center mt-2">
+                선택한 색상: <span className="font-semibold">{selectedColor.name}</span>
+              </p>
+            </div>
+
+            {/* 그룹 태그 선택 */}
+            {groups.length > 0 && (
+              <div className="space-y-3 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <Users className="h-4 w-4 text-purple-600" />
+                  <Label className="text-sm font-semibold text-purple-900">
+                    소속 그룹 (선택사항)
+                  </Label>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-purple-200 text-purple-700 rounded-full text-xs font-semibold">
+                    <Sparkles className="h-3 w-3" />
+                    프리미엄
+                  </span>
+                </div>
+                <p className="text-xs text-purple-800">
+                  여러 그룹에 속할 수 있습니다 (다중 선택 가능)
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {groups.map((group) => (
+                    <button
+                      key={group.id}
+                      type="button"
+                      onClick={() => toggleTag(group.name)}
+                      className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition ${
+                        selectedTags.includes(group.name)
+                          ? 'bg-white border-2 shadow-sm'
+                          : 'bg-white/50 border border-purple-200 hover:bg-white'
+                      }`}
+                      style={{
+                        borderColor: selectedTags.includes(group.name)
+                          ? group.color
+                          : undefined,
+                      }}
+                    >
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: group.color }}
+                      />
+                      <span>{group.name}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <DialogFooter className="flex-shrink-0 mt-4">
             <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
               취소
             </Button>

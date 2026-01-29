@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useParams, notFound, useRouter } from 'next/navigation'
 import { UserSetup } from '@/components/room/user-setup'
 import { CalendarView } from '@/components/calendar/calendar-view'
@@ -28,6 +28,8 @@ export default function RoomPage() {
   const [showEditDialog, setShowEditDialog] = useState(false)
   const [editingProfile, setEditingProfile] = useState<any | null>(null)
   const [allRoomUsers, setAllRoomUsers] = useState<any[]>([])
+
+  const profileDropdownRef = useRef<HTMLDivElement>(null)
 
   const currentUser = getCurrentUser(roomCode.toUpperCase())
   const roomProfiles = getRoomProfiles(roomCode.toUpperCase())
@@ -88,6 +90,22 @@ export default function RoomPage() {
 
     loadRoom()
   }, [roomCode])
+
+  // Click outside to close profile dropdown
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target as Node)) {
+        setShowProfileSelector(false)
+      }
+    }
+
+    if (showProfileSelector) {
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside)
+      }
+    }
+  }, [showProfileSelector])
 
   const handleSetupComplete = () => {
     setShowSetup(false)
@@ -241,7 +259,7 @@ export default function RoomPage() {
               <OnlineUsers roomId={currentRoom.id} roomCode={roomCode.toUpperCase()} onCountChange={setOnlineCount} />
 
               {/* 프로필 표시 */}
-              <div className="flex items-center gap-2">
+              <div className="relative flex items-center gap-2">
                 {/* 현재 프로필 또는 선택 버튼 */}
                 {currentUser ? (
                   <div className="flex items-center gap-2 bg-white rounded-full px-2 py-1 border shadow-sm">
@@ -282,7 +300,17 @@ export default function RoomPage() {
 
                 {/* 프로필 선택 드롭다운 */}
                 {showProfileSelector && allRoomUsers.length > 0 && (
-                  <div className="absolute top-16 right-4 bg-white rounded-xl shadow-xl border p-4 md:p-5 z-50 min-w-[300px] md:min-w-[340px] max-h-[70vh] max-h-[70dvh] overflow-y-auto safe-area-padding">
+                  <>
+                    {/* 백드롭 */}
+                    <div
+                      className="fixed inset-0 bg-black/20 z-40"
+                      onClick={() => setShowProfileSelector(false)}
+                    />
+
+                    <div
+                      ref={profileDropdownRef}
+                      className="absolute top-full right-0 mt-2 bg-white rounded-xl shadow-xl border p-4 md:p-5 z-50 min-w-[300px] md:min-w-[340px] max-h-[70vh] max-h-[70dvh] overflow-y-auto safe-area-padding"
+                    >
                     <div className="flex items-center justify-between mb-4 pb-3 border-b">
                       <h3 className="text-base font-bold text-gray-800 text-center flex-1">
                         일정 입력할 프로필 선택
@@ -375,6 +403,7 @@ export default function RoomPage() {
                       </div>
                     </div>
                   </div>
+                  </>
                 )}
               </div>
             </div>
