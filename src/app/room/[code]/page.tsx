@@ -232,29 +232,31 @@ export default function RoomPage() {
       <header className="bg-white border-b sticky top-0 z-10">
         <div className="w-full px-2 py-3 md:container md:max-w-4xl md:mx-auto md:px-4 md:py-4"
              style={{ paddingTop: 'max(0.75rem, env(safe-area-inset-top))' }}>
-          <div className="flex items-center justify-between gap-2 md:gap-4">
-            <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
+          <div className="flex items-center justify-between gap-1 md:gap-4">
+            <div className="flex items-center gap-1 md:gap-3 flex-shrink-0">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => router.push('/')}
-                className="flex-shrink-0"
+                className="flex-shrink-0 h-9 w-9"
                 title="메인으로"
               >
                 <Home className="h-4 w-4 md:h-5 md:w-5" />
               </Button>
-              <RoomSettingsDialog
-                roomId={currentRoom.id}
-                roomCode={roomCode.toUpperCase()}
-                creatorUserId={currentRoom.creator_user_id || null}
-                currentPasswordHash={currentRoom.password_hash || null}
-              />
-              <div className="hidden sm:block">
-                <h1 className="text-lg md:text-xl font-bold">약속 캘린더</h1>
-                <p className="text-xs md:text-sm text-gray-600">방 코드: {roomCode}</p>
+              <div className="hidden md:flex md:items-center md:gap-3">
+                <RoomSettingsDialog
+                  roomId={currentRoom.id}
+                  roomCode={roomCode.toUpperCase()}
+                  creatorUserId={currentRoom.creator_user_id || null}
+                  currentPasswordHash={currentRoom.password_hash || null}
+                />
+                <div>
+                  <h1 className="text-lg md:text-xl font-bold">약속 캘린더</h1>
+                  <p className="text-xs md:text-sm text-gray-600">방 코드: {roomCode}</p>
+                </div>
               </div>
             </div>
-            <div className="flex items-center gap-1.5 md:gap-3 overflow-x-auto scrollbar-hide flex-shrink-0 max-w-[60vw]">
+            <div className="flex items-center gap-1.5 md:gap-3 overflow-x-auto scrollbar-hide flex-1 justify-end">
               <GroupManager roomId={currentRoom.id} />
               <OnlineUsers roomId={currentRoom.id} roomCode={roomCode.toUpperCase()} onCountChange={setOnlineCount} />
 
@@ -309,7 +311,7 @@ export default function RoomPage() {
 
                     <div
                       ref={profileDropdownRef}
-                      className="fixed top-20 right-4 bg-white rounded-xl shadow-xl border p-4 md:p-5 z-50 min-w-[300px] md:min-w-[340px] max-h-[70vh] max-h-[70dvh] overflow-y-auto safe-area-padding"
+                      className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-xl border p-4 md:p-5 z-50 w-[90vw] max-w-[340px] max-h-[80vh] max-h-[80dvh] overflow-y-auto safe-area-padding"
                     >
                     <div className="flex items-center justify-between mb-4 pb-3 border-b">
                       <h3 className="text-base font-bold text-gray-800 text-center flex-1">
